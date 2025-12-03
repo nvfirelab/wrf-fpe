@@ -1,0 +1,23 @@
+domain:
+  size: 2500.0           # Meters
+  resolution: 200        # Grid cells
+  center: [1250, 1250]
+  initial_radius: 20.0
+
+simulation:
+  timesteps: 150
+  visual_dt: 2.0
+  cfl_limit: 0.5
+  save_gif: true         # NEW: Toggle saving
+  output_filename: "fire_spread.gif"
+
+fuel:
+  # Standard "Short Grass" (Fuel Model 1) approximations:
+  load: 0.717              # kg/m^2 (Fuel loading)
+  depth: 0.6             # meters (Fuel bed depth)
+  moisture: 0.03         # 5% moisture content (0.0 to 1.0)
+  extinction_moisture: 0.15 # 15% - Fire dies if moisture > this
+
+environment:
+  wind_speed: 15.0       # m/s
+  wind_direction: [1, 0] # Blowing East

@@ -28,7 +28,7 @@ class RothermelROSEvolution:
     accounts for fuel properties, wind speed, and slope effects.
     """
     
-    def __init__(self, phi_inner, phi_outer, X, Y, T=1.0, num_steps=20,
+    def __init__(self, phi_inner, phi_outer, X, Y, T=100.0, num_steps=100,
                  fuel_load=None, fuel_depth=None, fuel_moisture=None,
                  wind_speed=None, wind_direction=None, slope=None, slope_aspect=None,
                  config_file=None):
@@ -46,9 +46,10 @@ class RothermelROSEvolution:
         Y : numpy.ndarray
             Meshgrid of Y coordinates
         T : float
-            Total evolution time (arbitrary units)
+            Maximum evolution time (arbitrary units). Default 100.0.
+            The fire will evolve naturally and may not reach phi_outer at this time.
         num_steps : int
-            Number of animation frames
+            Number of animation frames. Default 100.
         fuel_load : numpy.ndarray, optional
             Fuel load (kg/m²) at each grid point. If None, uses uniform default.
         fuel_depth : numpy.ndarray, optional
@@ -58,7 +59,9 @@ class RothermelROSEvolution:
         wind_speed : numpy.ndarray, optional
             Wind speed (m/s) at each grid point. If None, uses uniform default.
         wind_direction : numpy.ndarray, optional
-            Wind direction (radians, 0 = east) at each grid point. If None, uses uniform default.
+            Wind direction (radians, 0 = east, increases counterclockwise) at each grid point.
+            If None, uses value from config file (which is in degrees, 0 = north, increases clockwise).
+            Note: When passed directly, use radians in east-based convention for backward compatibility.
         slope : numpy.ndarray, optional
             Slope (radians) at each grid point. If None, uses uniform default.
         slope_aspect : numpy.ndarray, optional
@@ -67,18 +70,65 @@ class RothermelROSEvolution:
             Path to YAML configuration file. If None, uses default config file in same directory,
             or falls back to hardcoded defaults if file doesn't exist.
         """
-        self.phi_inner = phi_inner
-        self.phi_outer = phi_outer
+        # Ensure phi_inner is a proper signed distance function
+        # The zero level set (phi = 0) represents the fire perimeter
+        # Negative values = inside fire, positive values = outside fire
+        self.phi_inner = phi_inner.copy()
         self.X = X
         self.Y = Y
         self.T = T
         self.num_steps = num_steps
         
-        # Compute grid spacing
+        # Compute grid spacing first (needed for gradient calculations)
         x = X[0, :]
         y = Y[:, 0]
         self.dx = x[1] - x[0]
         self.dy = y[1] - y[0]
+        
+        # Verify and optionally renormalize phi_inner to ensure it's a proper SDF
+        # Check if |∇phi| ≈ 1 (property of a signed distance function)
+        # Note: We assume phi_inner is already a proper SDF, but we'll renormalize during evolution
+        
+        # Set phi_outer to be at the edge of the domain (free evolution)
+        # Create a signed distance function where the boundary is at the domain edges
+        x_min, x_max = X[0, 0], X[0, -1]
+        y_min, y_max = Y[0, 0], Y[-1, 0]
+        
+        # Compute distance to nearest domain edge
+        # phi_outer should be negative inside domain, zero at edges, positive outside
+        dist_to_left = X - x_min
+        dist_to_right = x_max - X
+        dist_to_bottom = Y - y_min
+        dist_to_top = y_max - Y
+        
+        # Distance to nearest edge (negative means inside)
+        phi_outer = -np.minimum(np.minimum(dist_to_left, dist_to_right),
+                               np.minimum(dist_to_bottom, dist_to_top))
+        
+        self.phi_outer = phi_outer
+        
+        # Find center of initial contour (origin)
+        zero_mask = np.abs(phi_inner) < 0.05 * np.max(np.abs(phi_inner))
+        if np.any(zero_mask):
+            self.origin_x = np.mean(X[zero_mask])
+            self.origin_y = np.mean(Y[zero_mask])
+        else:
+            # Fallback: use center of grid
+            self.origin_x = (X[0, 0] + X[-1, -1]) / 2.0
+            self.origin_y = (Y[0, 0] + Y[-1, -1]) / 2.0
+        
+        # Convert coordinates to feet from origin
+        # Assuming input coordinates are in meters, convert to feet
+        # 1 meter = 3.28084 feet
+        METERS_TO_FEET = 3.28084
+        self.X_ft = (X - self.origin_x) * METERS_TO_FEET
+        self.Y_ft = (Y - self.origin_y) * METERS_TO_FEET
+        
+        # Compute grid spacing in feet
+        x_ft = self.X_ft[0, :]
+        y_ft = self.Y_ft[:, 0]
+        self.dx_ft = x_ft[1] - x_ft[0]
+        self.dy_ft = y_ft[1] - y_ft[0]
         
         # Load configuration from YAML file
         config = self._load_config(config_file)
@@ -89,7 +139,28 @@ class RothermelROSEvolution:
         self.fuel_depth = fuel_depth if fuel_depth is not None else np.ones_like(X) * config['fuel_depth']
         self.fuel_moisture = fuel_moisture if fuel_moisture is not None else np.ones_like(X) * config['fuel_moisture']
         self.wind_speed = wind_speed if wind_speed is not None else np.ones_like(X) * config['wind_speed']
-        self.wind_direction = wind_direction if wind_direction is not None else np.ones_like(X) * config['wind_direction']
+        
+        # Convert wind_direction from degrees (north-based) to radians (east-based)
+        # Config file uses: 0° = north (wind from north, blowing south), increases clockwise
+        # Code expects: 0 radians = east (wind blowing east), increases counterclockwise
+        # Conversion mapping:
+        #   Config 0° (north, blowing south) -> Math 270° (3π/2 rad, pointing south)
+        #   Config 90° (east, blowing west) -> Math 180° (π rad, pointing west)
+        #   Config 180° (south, blowing north) -> Math 90° (π/2 rad, pointing north)
+        #   Config 270° (west, blowing east) -> Math 0° (0 rad, pointing east)
+        # Formula: math_angle = (270 - config_angle) % 360, then convert to radians
+        if wind_direction is not None:
+            # If passed directly, assume it's already in radians (east-based) for backward compatibility
+            self.wind_direction = wind_direction
+        else:
+            # Convert from config: degrees (north-based) to radians (east-based)
+            wind_dir_deg = config['wind_direction']
+            # Convert north-based (0° = north, clockwise) to east-based (0° = east, counterclockwise)
+            # Formula: (270 - config_angle) % 360 converts correctly
+            wind_dir_math_deg = (270.0 - wind_dir_deg) % 360.0
+            wind_dir_rad = np.deg2rad(wind_dir_math_deg)
+            self.wind_direction = np.ones_like(X) * wind_dir_rad
+        
         self.slope = slope if slope is not None else np.ones_like(X) * config['slope']
         self.slope_aspect = slope_aspect if slope_aspect is not None else np.ones_like(X) * config['slope_aspect']
         
@@ -98,15 +169,12 @@ class RothermelROSEvolution:
         self.mineral_damping = config['mineral_damping']
         self.max_reaction_velocity = 0.0  # Will be computed from fuel properties
         
-        # Initialize speed map and tracking variables
-        self.speed_map = np.full_like(phi_inner, np.nan)
-        self.phi_prev = phi_inner.copy()
+        # Initialize tracking variables
+        # phi_prev starts as phi_inner - the zero level set is the initial fire perimeter
+        self.phi_prev = self.phi_inner.copy()
         
-        # Precompute speed range for consistent color mapping
-        self.vmin, self.vmax = self._precompute_speed_range()
-        
-        # Initialize speed map with initial values
-        self._initialize_speed_map()
+        # Track which points have reached phi_outer (stop evolving them)
+        self.reached_outer = np.zeros_like(phi_inner, dtype=bool)
         
         # Animation variables
         self.fig = None
@@ -128,12 +196,13 @@ class RothermelROSEvolution:
             Configuration dictionary with parameter values
         """
         # Default configuration values (fallback)
+        # Note: wind_direction is in degrees (0 = north, increases clockwise)
         default_config = {
             'fuel_load': 0.5,
             'fuel_depth': 0.3,
             'fuel_moisture': 0.15,
             'wind_speed': 5.0,
-            'wind_direction': 0.0,
+            'wind_direction': 0.0,  # degrees: 0 = north, increases clockwise
             'slope': 0.0,
             'slope_aspect': 0.0,
             'heat_content': 18600.0,
@@ -183,7 +252,7 @@ class RothermelROSEvolution:
         Returns:
         --------
         ros : numpy.ndarray
-            Rate of spread (m/s) at each grid point
+            Rate of spread (ft/min) at each grid point
         """
         # Compute gradient to determine fire front direction
         grad_y, grad_x = np.gradient(phi, self.dy, self.dx)
@@ -258,65 +327,19 @@ class RothermelROSEvolution:
         # Ensure ROS is non-negative (fire can't spread backward)
         ros = np.maximum(ros, 0.0)
         
-        # Scale ROS to match the evolution time scale
-        # The ROS needs to be scaled so that the fire can reach phi_outer in time T
-        # We'll scale based on the maximum distance to cover
-        max_distance = np.max(np.abs(self.phi_outer - self.phi_inner))
-        if max_distance > 0 and np.max(ros) > 0:
-            # Scale ROS so that the maximum distance can be covered
-            # Use a scaling factor that ensures reasonable evolution speed
-            scale_factor = max_distance / (self.T * np.max(ros) + 1e-10)
-            # Apply scaling but keep relative differences
-            ros = ros * scale_factor
+        # Convert ROS from m/s to ft/min
+        # 1 m/s = 196.8504 ft/min
+        METERS_PER_SEC_TO_FEET_PER_MIN = 196.8504
+        ros_ft_per_min = ros * METERS_PER_SEC_TO_FEET_PER_MIN
         
-        return ros
-    
-    def _precompute_speed_range(self):
-        """
-        Precompute min and max speeds across all frames for consistent color mapping.
-        
-        Returns:
-        --------
-        vmin : float
-            Minimum speed value
-        vmax : float
-            Maximum speed value
-        """
-        speeds = []
-        
-        # Initial speed
-        ros_initial = self._compute_rothermel_ros(self.phi_inner, 0.0)
-        initial_mask = self.phi_inner < 0
-        speeds.extend(ros_initial[initial_mask].flatten())
-        
-        # Compute speeds for all frames
-        phi_prev = self.phi_inner.copy()
-        for frame in range(1, self.num_steps + 1):
-            t = frame * (self.T / self.num_steps)
-            # Estimate phi at this time (using linear interpolation as approximation)
-            s = t / self.T
-            phi = (1 - s) * self.phi_inner + s * self.phi_outer
-            ros = self._compute_rothermel_ros(phi, t)
-            new_mask = (phi_prev >= 0) & (phi < 0)
-            speeds.extend(ros[new_mask].flatten())
-            phi_prev = phi.copy()
-        
-        if len(speeds) == 0:
-            return 0.0, 1.0
-        
-        return np.min(speeds), np.max(speeds)
-    
-    def _initialize_speed_map(self):
-        """Initialize the speed map with values at t=0."""
-        ros_initial = self._compute_rothermel_ros(self.phi_inner, 0.0)
-        initial_mask = self.phi_inner < 0
-        self.speed_map[initial_mask] = ros_initial[initial_mask]
+        return ros_ft_per_min
     
     def _update_frame(self, frame):
         """
         Update function for animation frames.
         
-        Evolves the fire perimeter using level set method with Rothermel ROS speeds.
+        Evolves the fire perimeter using Rothermel ROS speeds at each point.
+        Different points evolve at different rates based on local ROS values.
         
         Parameters:
         -----------
@@ -328,90 +351,73 @@ class RothermelROSEvolution:
         ax : matplotlib.axes.Axes
             The updated axes object
         """
-        t = frame * (self.T / self.num_steps)  # Current time
+        t = frame * (self.T / self.num_steps)  # Current time in minutes
         
-        # Stop evolution after T
-        if t >= self.T:
-            phi = self.phi_outer.copy()
-        else:
-            s = t / self.T  # Normalized time [0, 1]
-            
-            # Compute ROS at current fire front
-            ros = self._compute_rothermel_ros(self.phi_prev, t)
-            
-            # Compute gradient for level set evolution
-            grad_y, grad_x = np.gradient(self.phi_prev, self.dy, self.dx)
-            grad_mag = np.sqrt(grad_x**2 + grad_y**2) + 1e-10
-            
-            # Level set evolution: dphi/dt = -V * |∇phi|
-            # where V is the ROS normal to the front
-            dt = self.T / self.num_steps
-            
-            # Evolve phi using level set method with Rothermel ROS
-            phi_ros = self.phi_prev.copy()
-            
-            # For points that should expand (inside initial contour)
-            expand_mask = (self.phi_inner < 0) & (self.phi_prev < self.phi_outer)
-            
-            # Apply level set evolution based on ROS
-            if np.any(expand_mask):
-                # Move outward (decrease phi, making it more negative or less positive)
-                # The ROS gives the speed, so we evolve: dphi = -V * |∇phi| * dt
-                phi_ros[expand_mask] = self.phi_prev[expand_mask] - dt * ros[expand_mask] * grad_mag[expand_mask]
-            
-            # Linear interpolation target (ensures we reach phi_outer at t=T)
-            phi_interp = (1 - s) * self.phi_inner + s * self.phi_outer
-            
-            # Blend ROS evolution with interpolation to ensure we reach target
-            # Weight interpolation more heavily as we approach t=T to guarantee convergence
-            weight_interp = s ** 0.5  # Increases from 0 to 1 as s increases
-            weight_ros = 1.0 - weight_interp
-            
-            # Combine both approaches
-            phi = weight_ros * phi_ros + weight_interp * phi_interp
-            
-            # Ensure no contraction and don't exceed phi_outer
-            expand_mask_final = (self.phi_inner < 0) & (self.phi_prev < self.phi_outer)
-            if np.any(expand_mask_final):
-                # No contraction: phi should be <= phi_prev (more negative or less positive)
-                phi[expand_mask_final] = np.minimum(phi[expand_mask_final], self.phi_prev[expand_mask_final])
-                # Don't exceed phi_outer
-                phi[expand_mask_final] = np.maximum(phi[expand_mask_final], self.phi_outer[expand_mask_final])
-            
-            # At t=T, ensure exact match with phi_outer
-            if s >= 1.0:
-                phi = self.phi_outer.copy()
+        # Compute ROS at current fire front (in ft/min)
+        ros_ft_per_min = self._compute_rothermel_ros(self.phi_prev, t)
         
-        # Compute current ROS for visualization
-        ros_current = self._compute_rothermel_ros(phi, t)
+        # Compute gradient for level set evolution
+        grad_y, grad_x = np.gradient(self.phi_prev, self.dy, self.dx)
+        grad_mag = np.sqrt(grad_x**2 + grad_y**2) + 1e-10
         
-        # Find newly incorporated points
-        new_mask = (self.phi_prev >= 0) & (phi < 0)
-        self.speed_map[new_mask] = ros_current[new_mask]
+        # Time step in minutes
+        dt_min = self.T / self.num_steps
+        
+        # Convert ROS from ft/min to meters per minute, then to displacement per timestep
+        # 1 foot = 0.3048 meters
+        METERS_TO_FEET = 3.28084
+        ros_m_per_min = ros_ft_per_min / METERS_TO_FEET
+        ros_displacement_m = ros_m_per_min * dt_min  # displacement in meters per timestep
+        
+        # Level set evolution: dphi/dt = -V * |∇phi|
+        # For expansion outward, we subtract: phi_new = phi_old - V * |∇phi| * dt
+        # This makes phi more negative (expands the interior, since negative = inside)
+        # phi is in meters, so ros_displacement_m is in the correct units
+        phi = self.phi_prev.copy()
+        
+        # Apply level set evolution
+        # The fire front is at phi = 0, and we want it to expand outward
+        phi = phi - ros_displacement_m * grad_mag
+        
+        # Renormalize to maintain signed distance function property (|∇phi| ≈ 1)
+        # This ensures the zero level set (phi = 0) accurately represents the perimeter
+        # Simple renormalization: phi_renorm = phi * sign(phi) / (|∇phi| + epsilon)
+        # But a better approach is to use the fast marching method or simply ensure
+        # the zero level set is preserved while maintaining SDF property near it
+        # For now, we'll do a simple renormalization near the zero level set
+        zero_band = np.abs(phi) < 2.0 * max(abs(self.dx), abs(self.dy))  # Within 2 grid cells of zero
+        if np.any(zero_band):
+            # Renormalize: phi_new = phi_old * sign(phi_old) / max(|∇phi|, 1)
+            # This maintains the sign and ensures |∇phi| doesn't become too large
+            grad_y_phi, grad_x_phi = np.gradient(phi, self.dy, self.dx)
+            grad_mag_phi = np.sqrt(grad_x_phi**2 + grad_y_phi**2) + 1e-10
+            # Only renormalize where gradient magnitude is significantly different from 1
+            renormalize_mask = zero_band & (grad_mag_phi > 1.5)
+            if np.any(renormalize_mask):
+                phi[renormalize_mask] = phi[renormalize_mask] / grad_mag_phi[renormalize_mask]
+        
+        # Ensure no contraction for points that started inside the fire
+        # For points inside (phi_inner < 0), expansion means phi becomes MORE NEGATIVE
+        inside_initial = self.phi_inner < 0
+        contraction_mask = inside_initial & (phi > self.phi_prev)
+        if np.any(contraction_mask):
+            phi[contraction_mask] = self.phi_prev[contraction_mask]
         
         # Update phi_prev
         self.phi_prev = phi.copy()
         
         # Clear and replot
         self.ax.clear()
-        # Use persisted limits from create_animation
+        # Use persisted limits from create_animation (cartesian grid)
         if hasattr(self, '_xlim') and hasattr(self, '_ylim'):
             self.ax.set_xlim(self._xlim[0], self._xlim[1])
             self.ax.set_ylim(self._ylim[0], self._ylim[1])
         self.ax.set_aspect('equal')
-        self.ax.set_title(f'Rothermel ROS Evolution at t = {t:.2f}')
+        self.ax.set_title(f'Rothermel ROS Evolution at t = {t:.2f} minutes')
         
-        # Plot the speed traces using pcolormesh with fixed color range
-        masked_speed = np.ma.masked_invalid(self.speed_map)
-        self.ax.pcolormesh(self.X, self.Y, masked_speed, cmap='jet', 
-                          vmin=self.vmin, vmax=self.vmax, shading='gouraud')
-        
-        # Plot the evolving contour
-        self.ax.contour(self.X, self.Y, phi, levels=[0], colors='red', linewidths=2)
-        
-        # Plot the target outer contour for reference
-        self.ax.contour(self.X, self.Y, self.phi_outer, levels=[0], 
-                       colors='green', linestyles='dashed', linewidths=1.5)
+        # Plot the evolving contour and label contour values
+        cs = self.ax.contour(self.X, self.Y, phi, colors='red', linewidths=2)
+        self.ax.clabel(cs, inline=True, fontsize=8)
         
         return self.ax,
     
@@ -442,9 +448,6 @@ class RothermelROSEvolution:
         self.ax.set_aspect('equal')
         self.ax.set_title('Fire Perimeter Evolution via Rothermel Rate-of-Spread Model')
         
-        # Add colorbar with fixed range
-        sm = plt.cm.ScalarMappable(cmap='jet', norm=plt.Normalize(vmin=self.vmin, vmax=self.vmax))
-        self.fig.colorbar(sm, ax=self.ax, label='ROS (m/s)')
         
         # Create the animation
         self.ani = FuncAnimation(self.fig, self._update_frame, 
