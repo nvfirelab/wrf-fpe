@@ -1,0 +1,21 @@
+# Rothermel ROS Evolution Configuration
+# This file contains default parameters for the Rothermel rate-of-spread fire model
+# All parameters are uniform across the grid unless overridden programmatically
+
+# Fuel properties
+fuel_load: 0.5          # Fuel load in kg/m²
+fuel_depth: 0.3         # Fuel depth in meters
+fuel_moisture: 0.15     # Fuel moisture content (fraction, 0.0 to 1.0)
+
+# Wind properties
+wind_speed: 5.0         # Wind speed in m/s
+wind_direction: 0.0     # Wind direction in radians (0 = east, increases counterclockwise)
+
+# Terrain properties
+slope: 0.0              # Slope in radians (0 = flat)
+slope_aspect: 0.0       # Slope aspect in radians (0 = east, increases counterclockwise)
+
+# Rothermel model constants (advanced)
+heat_content: 18600.0   # Heat content of fuel in kJ/kg
+mineral_damping: 0.174  # Mineral damping coefficient
+

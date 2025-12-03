@@ -15,13 +15,14 @@ from shapefile_loader import load_phi_outer_from_shapefile, get_shapefile_bounds
 from contour_generator import generate_contour
 from perimeter_evolution import PerimeterEvolution
 from perimter_evolution_v2 import PerimeterEvolutionV2
+from rothermel_ros_evolution import RothermelROSEvolution
 
 # Configuration parameters
 contour_type = 1  # 1 for random Fourier, 2 for tongues with spots
 # Optional: path to shapefile for outer contour, or None to use generate_contour
-shapefile_path_outer = '/Users/ryanpurciel/Documents/UNR/LahainaWRFSFire/SHAPE_FILES_LAHAINA/530.shp'  
+shapefile_path_outer = None #'/Users/ryanpurciel/Documents/UNR/LahainaWRFSFire/SHAPE_FILES_LAHAINA/530.shp'  
 # Optional: path to shapefile for inner contour, or None to use default circle
-shapefile_path_inner = '/Users/ryanpurciel/Documents/UNR/LahainaWRFSFire/SHAPE_FILES_LAHAINA/430.shp'
+shapefile_path_inner = None #'/Users/ryanpurciel/Documents/UNR/LahainaWRFSFire/SHAPE_FILES_LAHAINA/430.shp'
 
 # Define the grid for computation
 # If shapefiles are provided, use their bounds in cartesian coordinates
@@ -81,12 +82,14 @@ if phi_outer is None:
 T = 1.0  # Total time
 num_steps = 20  # Number of animation frames
 
-# Choose evolution behavior: 'v1' (varying front speeds) or 'v2' (uniform front speed)
-evolution_mode = 'v2'
+# Choose evolution behavior: 'v1' (varying front speeds), 'v2' (uniform front speed), or 'rothermel' (Rothermel ROS)
+evolution_mode = 'rothermel'
 
 # Create perimeter evolution instance
 if evolution_mode == 'v2':
     evolution = PerimeterEvolutionV2(phi_inner, phi_outer, X, Y, T=T, num_steps=num_steps)
+elif evolution_mode == 'rothermel':
+    evolution = RothermelROSEvolution(phi_inner, phi_outer, X, Y, T=T, num_steps=num_steps)
 else:
     evolution = PerimeterEvolution(phi_inner, phi_outer, X, Y, T=T, num_steps=num_steps)
 
@@ -94,5 +97,10 @@ else:
 evolution.create_animation(interval=200, xlim=xlim, ylim=ylim)
 
 # Save the animation as a GIF
-outfile = 'contour_evolution_v2_330_to_430.gif' if evolution_mode == 'v2' else 'contour_evolution_v1_330_to_430.gif'
+if evolution_mode == 'v2':
+    outfile = 'contour_evolution_v2_330_to_430.gif'
+elif evolution_mode == 'rothermel':
+    outfile = 'contour_evolution_rothermel_330_to_430.gif'
+else:
+    outfile = 'contour_evolution_v1_330_to_430.gif'
 evolution.save_animation(outfile, fps=10)
