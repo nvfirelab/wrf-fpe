@@ -8,16 +8,41 @@ simulation:
   timesteps: 150
   visual_dt: 2.0
   cfl_limit: 0.5
-  save_gif: true         # NEW: Toggle saving
+  save_gif: false
   output_filename: "fire_spread.gif"
 
 fuel:
   # Standard "Short Grass" (Fuel Model 1) approximations:
-  load: 0.717              # kg/m^2 (Fuel loading)
+  load: 5              # kg/m^2 (Fuel loading)
   depth: 0.6             # meters (Fuel bed depth)
   moisture: 0.03         # 5% moisture content (0.0 to 1.0)
   extinction_moisture: 0.15 # 15% - Fire dies if moisture > this
 
 environment:
   wind_speed: 15.0       # m/s
-  wind_direction: [1, 0] # Blowing East
+  wind_direction: 90.0   # Degrees from North 
+
+terrain:
+  # OPTIONS: "flat", "gradient", "periodic", "random"
+  model: "flat"
+  max_elevation: 500.0   # Maximum height difference (meters)
+  
+# --- Specific Model Settings ---
+  
+  # 1. Gradient Model Settings
+  gradient_direction: 180.0  # Degrees from North (Uphill direction)
+  
+  # 2. Periodic Model Settings
+  frequency: 1.0            # Number of hills across the domain
+  
+  # 3. Random Model Settings
+  seed: 42                  # Seed for reproducibility
+  smoothness: 15        # Higher = smoother rolling hills, Lower = jagged
+  
+  # --- Lake (Unburnable) Settings ---
+  lakes:
+    enabled: false
+    count: 12
+    min_radius: 30.0
+    max_radius: 80.0
+    seed: 999               # Separate seed for lake placement
