@@ -1,0 +1,2716 @@
+Chain of 43 evolution(s) from /Users/ryanpurciel/Documents/UNR/fpe_claude/scripts/test_chain.yaml
+grid: GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+
+segment 0: 2026-08-22 18:51:46Z -> 18:54:50Z (3 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   5.9
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 3.1093 m/s @ 38 deg, flank 0.1778, back 0.0915 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 3.1093 m/s @ 38 deg, flank 0.1778, back 0.0915 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        184 s (0.05 h)
+  band            539 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1110 progress   = 0.3 min
+  rms             0.1389
+  max |change|    0.5382 progress   = 1.7 min
+  signed mean     -0.1093 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1093   = -0.3 min   (539 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9420
+  min jaccard     0.9072 at s = 0.50
+  disagreement    0.0580 mean, splitting into
+    size          0.0570   (different amounts burned by the same level)
+    placement     0.0010   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    20.0 m mean, 27.3 m max   (0.8 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    566 m over 184 s
+  implied         3.0752 m/s
+  observed |v|    3.1093 m/s
+  ratio           0.989
+
+segment 1: 2026-08-22 18:54:50Z -> 19:00:52Z (6 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   15.4
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 1.1910 m/s @ 34 deg, flank 0.0681, back 0.0351 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 1.1910 m/s @ 34 deg, flank 0.0681, back 0.0351 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        362 s (0.10 h)
+  band            558 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.0914 progress   = 0.6 min
+  rms             0.1376
+  max |change|    0.4419 progress   = 2.7 min
+  signed mean     -0.0806 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0806   = -0.5 min   (558 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9655
+  min jaccard     0.9235 at s = 0.45
+  disagreement    0.0345 mean, splitting into
+    size          0.0301   (different amounts burned by the same level)
+    placement     0.0044   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    26.2 m mean, 61.1 m max   (1.0 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    409 m over 362 s
+  implied         1.1292 m/s
+  observed |v|    1.1910 m/s
+  ratio           0.948
+
+segment 2: 2026-08-22 19:00:52Z -> 19:12:53Z (12 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   19.0
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.9659 m/s @ 27 deg, flank 0.0552, back 0.0284 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.9659 m/s @ 27 deg, flank 0.0552, back 0.0284 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        721 s (0.20 h)
+  band            850 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1358 progress   = 1.6 min
+  rms             0.1793
+  max |change|    0.4710 progress   = 5.7 min
+  signed mean     -0.1347 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1347   = -1.6 min   (850 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9466
+  min jaccard     0.8982 at s = 0.45
+  disagreement    0.0534 mean, splitting into
+    size          0.0529   (different amounts burned by the same level)
+    placement     0.0005   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    39.5 m mean, 75.5 m max   (1.6 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    683 m over 721 s
+  implied         0.9470 m/s
+  observed |v|    0.9659 m/s
+  ratio           0.980
+
+segment 3: 2026-08-22 19:12:53Z -> 19:27:08Z (14 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   24.4
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.7512 m/s @ 20 deg, flank 0.0430, back 0.0221 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.7512 m/s @ 20 deg, flank 0.0430, back 0.0221 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        855 s (0.24 h)
+  band            588 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1480 progress   = 2.1 min
+  rms             0.1941
+  max |change|    0.4483 progress   = 6.4 min
+  signed mean     -0.1458 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1458   = -2.1 min   (588 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9696
+  min jaccard     0.9335 at s = 0.45
+  disagreement    0.0304 mean, splitting into
+    size          0.0300   (different amounts burned by the same level)
+    placement     0.0004   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    39.8 m mean, 70.2 m max   (1.6 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    606 m over 855 s
+  implied         0.7092 m/s
+  observed |v|    0.7512 m/s
+  ratio           0.944
+
+segment 4: 2026-08-22 19:27:08Z -> 19:33:48Z (7 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   12.9
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 1.4170 m/s @ 30 deg, flank 0.0810, back 0.0417 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 1.4170 m/s @ 30 deg, flank 0.0810, back 0.0417 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        400 s (0.11 h)
+  band            622 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1291 progress   = 0.9 min
+  rms             0.1736
+  max |change|    0.4570 progress   = 3.0 min
+  signed mean     -0.1272 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1272   = -0.8 min   (622 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9769
+  min jaccard     0.9481 at s = 0.45
+  disagreement    0.0231 mean, splitting into
+    size          0.0228   (different amounts burned by the same level)
+    placement     0.0003   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    32.4 m mean, 64.7 m max   (1.3 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    526 m over 400 s
+  implied         1.3159 m/s
+  observed |v|    1.4170 m/s
+  ratio           0.929
+
+segment 5: 2026-08-22 19:33:48Z -> 19:45:53Z (12 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   58.8
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.3118 m/s @ 25 deg, flank 0.0178, back 0.0092 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.3118 m/s @ 25 deg, flank 0.0178, back 0.0092 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        725 s (0.20 h)
+  band            313 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1445 progress   = 1.7 min
+  rms             0.1874
+  max |change|    0.5456 progress   = 6.6 min
+  signed mean     +0.0067 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      +0.0067   = +0.1 min   (313 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9887
+  min jaccard     0.9764 at s = 0.50
+  disagreement    0.0113 mean, splitting into
+    size          0.0028   (different amounts burned by the same level)
+    placement     0.0085   (same amount, different cells)
+  dominant        placement   (redistribution, as predicted)
+  front offset    19.4 m mean, 30.6 m max   (0.8 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    48 m over 725 s
+  implied         0.0661 m/s
+  observed |v|    0.3118 m/s
+  ratio           0.212
+
+segment 6: 2026-08-22 19:45:53Z -> 20:08:40Z (23 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   28.2
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.6501 m/s @ 16 deg, flank 0.0372, back 0.0191 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.6501 m/s @ 16 deg, flank 0.0372, back 0.0191 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        1367 s (0.38 h)
+  band            2000 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1416 progress   = 3.2 min
+  rms             0.1913
+  max |change|    0.5080 progress   = 11.6 min
+  signed mean     -0.1407 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1407   = -3.2 min   (2000 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9385
+  min jaccard     0.8338 at s = 0.50
+  disagreement    0.0615 mean, splitting into
+    size          0.0611   (different amounts burned by the same level)
+    placement     0.0004   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    73.5 m mean, 209.5 m max   (2.9 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    1074 m over 1367 s
+  implied         0.7858 m/s
+  observed |v|    0.6501 m/s
+  ratio           1.209
+
+segment 7: 2026-08-22 20:08:40Z -> 21:01:21Z (53 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   181.9
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.0959 m/s @ 71 deg, flank 0.0055, back 0.0028 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.0959 m/s @ 71 deg, flank 0.0055, back 0.0028 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        3161 s (0.88 h)
+  band            364 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.0594 progress   = 3.1 min
+  rms             0.0931
+  max |change|    0.4569 progress   = 24.1 min
+  signed mean     -0.0427 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0427   = -2.2 min   (364 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9964
+  min jaccard     0.9932 at s = 0.45
+  disagreement    0.0036 mean, splitting into
+    size          0.0027   (different amounts burned by the same level)
+    placement     0.0009   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    15.6 m mean, 20.7 m max   (0.6 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    148 m over 3161 s
+  implied         0.0468 m/s
+  observed |v|    0.0959 m/s
+  ratio           0.488
+
+segment 8: 2026-08-22 21:01:21Z -> 21:22:46Z (21 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   298.2
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.0585 m/s @ 108 deg, flank 0.0033, back 0.0017 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.0585 m/s @ 108 deg, flank 0.0033, back 0.0017 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        1285 s (0.36 h)
+  band            377 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1252 progress   = 2.7 min
+  rms             0.1706
+  max |change|    0.4846 progress   = 10.4 min
+  signed mean     -0.1121 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1121   = -2.4 min   (377 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9926
+  min jaccard     0.9797 at s = 0.45
+  disagreement    0.0074 mean, splitting into
+    size          0.0066   (different amounts burned by the same level)
+    placement     0.0007   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    21.4 m mean, 44.5 m max   (0.9 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 1285 s
+  implied         0.0000 m/s
+  observed |v|    0.0585 m/s
+  ratio           0.000
+
+segment 9: 2026-08-22 21:22:46Z -> 21:32:04Z (9 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   24.1
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.7236 m/s @ 164 deg, flank 0.0414, back 0.0213 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.7236 m/s @ 164 deg, flank 0.0414, back 0.0213 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        558 s (0.15 h)
+  band            964 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1002 progress   = 0.9 min
+  rms             0.1476
+  max |change|    0.5001 progress   = 4.7 min
+  signed mean     -0.0787 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0703   = -0.7 min   (761 cells)
+    upwind        -0.1104   = -1.0 min   (203 cells)
+    separation    -0.0401   = -0.4 min
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9861
+  min jaccard     0.9655 at s = 0.40
+  disagreement    0.0139 mean, splitting into
+    size          0.0114   (different amounts burned by the same level)
+    placement     0.0025   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    21.4 m mean, 37.4 m max   (0.9 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 558 s
+  implied         0.0000 m/s
+  observed |v|    0.7236 m/s
+  ratio           0.000
+
+segment 10: 2026-08-22 21:32:04Z -> 22:23:05Z (51 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   71.2
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.2206 m/s @ 170 deg, flank 0.0126, back 0.0065 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.2206 m/s @ 170 deg, flank 0.0126, back 0.0065 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        3061 s (0.85 h)
+  band            1129 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1331 progress   = 6.8 min
+  rms             0.1851
+  max |change|    0.4929 progress   = 25.1 min
+  signed mean     -0.1202 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1202   = -6.1 min   (1129 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9808
+  min jaccard     0.9470 at s = 0.45
+  disagreement    0.0192 mean, splitting into
+    size          0.0176   (different amounts burned by the same level)
+    placement     0.0016   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    36.2 m mean, 88.8 m max   (1.4 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 3061 s
+  implied         0.0000 m/s
+  observed |v|    0.2206 m/s
+  ratio           0.000
+
+segment 11: 2026-08-22 22:23:05Z -> 22:30:50Z (8 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   178.4
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.0880 m/s @ 341 deg, flank 0.0050, back 0.0026 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.0880 m/s @ 341 deg, flank 0.0050, back 0.0026 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        465 s (0.13 h)
+  band            1255 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.0794 progress   = 0.6 min
+  rms             0.1143
+  max |change|    0.5018 progress   = 3.9 min
+  signed mean     -0.0769 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0769   = -0.6 min   (1255 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9892
+  min jaccard     0.9833 at s = 0.45
+  disagreement    0.0108 mean, splitting into
+    size          0.0105   (different amounts burned by the same level)
+    placement     0.0003   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    24.3 m mean, 34.3 m max   (1.0 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    741 m over 465 s
+  implied         1.5928 m/s
+  observed |v|    0.0880 m/s
+  ratio           18.098
+
+segment 12: 2026-08-22 22:30:50Z -> 22:33:35Z (3 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   28.0
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.5601 m/s @ 102 deg, flank 0.0320, back 0.0165 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.5601 m/s @ 102 deg, flank 0.0320, back 0.0165 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        165 s (0.05 h)
+  band            513 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.0927 progress   = 0.3 min
+  rms             0.1408
+  max |change|    0.4636 progress   = 1.3 min
+  signed mean     -0.0813 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0813   = -0.2 min   (513 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9954
+  min jaccard     0.9887 at s = 0.45
+  disagreement    0.0046 mean, splitting into
+    size          0.0040   (different amounts burned by the same level)
+    placement     0.0006   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    21.7 m mean, 44.0 m max   (0.9 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    265 m over 165 s
+  implied         1.6048 m/s
+  observed |v|    0.5601 m/s
+  ratio           2.865
+
+segment 13: 2026-08-22 22:33:35Z -> 22:42:24Z (9 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   15.5
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 1.0153 m/s @ 40 deg, flank 0.0581, back 0.0299 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 1.0153 m/s @ 40 deg, flank 0.0581, back 0.0299 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        529 s (0.15 h)
+  band            1085 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1324 progress   = 1.2 min
+  rms             0.1858
+  max |change|    0.4833 progress   = 4.3 min
+  signed mean     -0.0948 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0864   = -0.8 min   (1051 cells)
+    upwind        -0.3548   = -3.1 min   (34 cells)
+    separation    -0.2684   = -2.4 min
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9862
+  min jaccard     0.9628 at s = 0.45
+  disagreement    0.0138 mean, splitting into
+    size          0.0104   (different amounts burned by the same level)
+    placement     0.0034   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    31.6 m mean, 71.7 m max   (1.3 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 529 s
+  implied         0.0000 m/s
+  observed |v|    1.0153 m/s
+  ratio           0.000
+
+segment 14: 2026-08-22 22:42:24Z -> 22:57:44Z (15 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   30.4
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.5168 m/s @ 97 deg, flank 0.0296, back 0.0152 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.5168 m/s @ 97 deg, flank 0.0296, back 0.0152 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        920 s (0.26 h)
+  band            826 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1101 progress   = 1.7 min
+  rms             0.1614
+  max |change|    0.4830 progress   = 7.4 min
+  signed mean     -0.1051 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1051   = -1.6 min   (826 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9922
+  min jaccard     0.9780 at s = 0.45
+  disagreement    0.0078 mean, splitting into
+    size          0.0075   (different amounts burned by the same level)
+    placement     0.0003   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    24.8 m mean, 57.1 m max   (1.0 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    303 m over 920 s
+  implied         0.3293 m/s
+  observed |v|    0.5168 m/s
+  ratio           0.637
+
+segment 15: 2026-08-22 22:57:44Z -> 23:21:29Z (24 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   35.9
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.4369 m/s @ 79 deg, flank 0.0250, back 0.0129 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.4369 m/s @ 79 deg, flank 0.0250, back 0.0129 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        1425 s (0.40 h)
+  band            742 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1207 progress   = 2.9 min
+  rms             0.1557
+  max |change|    0.4969 progress   = 11.8 min
+  signed mean     -0.1162 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1162   = -2.8 min   (742 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9928
+  min jaccard     0.9846 at s = 0.45
+  disagreement    0.0072 mean, splitting into
+    size          0.0069   (different amounts burned by the same level)
+    placement     0.0003   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    32.9 m mean, 76.8 m max   (1.3 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    608 m over 1425 s
+  implied         0.4267 m/s
+  observed |v|    0.4369 m/s
+  ratio           0.977
+
+segment 16: 2026-08-22 23:21:29Z -> 23:52:25Z (31 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   28.8
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.4170 m/s @ 18 deg, flank 0.0239, back 0.0123 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.4170 m/s @ 18 deg, flank 0.0239, back 0.0123 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        1856 s (0.52 h)
+  band            1365 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1289 progress   = 4.0 min
+  rms             0.1842
+  max |change|    0.4769 progress   = 14.8 min
+  signed mean     -0.1246 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1246   = -3.9 min   (1365 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9865
+  min jaccard     0.9659 at s = 0.45
+  disagreement    0.0135 mean, splitting into
+    size          0.0130   (different amounts burned by the same level)
+    placement     0.0005   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    47.7 m mean, 115.0 m max   (1.9 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 1856 s
+  implied         0.0000 m/s
+  observed |v|    0.4170 m/s
+  ratio           0.000
+
+segment 17: 2026-08-22 23:52:25Z -> 00:11:56Z (20 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   22.4
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.5725 m/s @ 181 deg, flank 0.0327, back 0.0169 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.5725 m/s @ 181 deg, flank 0.0327, back 0.0169 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        1171 s (0.33 h)
+  band            540 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.2098 progress   = 4.1 min
+  rms             0.2483
+  max |change|    0.5807 progress   = 11.3 min
+  signed mean     +0.2003 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -   = - min   (0 cells)
+    upwind        +0.2003   = +3.9 min   (540 cells)
+    separation    -   = - min
+    note: all growth lies upwind of the initial perimeter's centroid, against the heading - check the ROS vector's direction
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9923
+  min jaccard     0.9818 at s = 0.85
+  disagreement    0.0077 mean, splitting into
+    size          0.0074   (different amounts burned by the same level)
+    placement     0.0003   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    50.2 m mean, 97.8 m max   (2.0 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 1171 s
+  implied         0.0000 m/s
+  observed |v|    0.5725 m/s
+  ratio           0.000
+
+segment 18: 2026-08-23 00:11:56Z -> 00:27:47Z (16 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   21.6
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.7262 m/s @ 42 deg, flank 0.0415, back 0.0214 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.7262 m/s @ 42 deg, flank 0.0415, back 0.0214 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        951 s (0.26 h)
+  band            762 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1293 progress   = 2.0 min
+  rms             0.1665
+  max |change|    0.4624 progress   = 7.3 min
+  signed mean     -0.1270 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1270   = -2.0 min   (762 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9933
+  min jaccard     0.9867 at s = 0.45
+  disagreement    0.0067 mean, splitting into
+    size          0.0065   (different amounts burned by the same level)
+    placement     0.0001   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    31.8 m mean, 60.6 m max   (1.3 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    683 m over 951 s
+  implied         0.7183 m/s
+  observed |v|    0.7262 m/s
+  ratio           0.989
+
+segment 19: 2026-08-23 00:27:47Z -> 00:41:17Z (14 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   7.9
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 1.9820 m/s @ 53 deg, flank 0.1133, back 0.0583 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 1.9820 m/s @ 53 deg, flank 0.1133, back 0.0583 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        810 s (0.23 h)
+  band            1504 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1960 progress   = 2.6 min
+  rms             0.2274
+  max |change|    0.4242 progress   = 5.7 min
+  signed mean     -0.1959 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1959   = -2.6 min   (1504 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9817
+  min jaccard     0.9699 at s = 0.70
+  disagreement    0.0183 mean, splitting into
+    size          0.0182   (different amounts burned by the same level)
+    placement     0.0000   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    99.6 m mean, 164.0 m max   (4.0 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    1610 m over 810 s
+  implied         1.9874 m/s
+  observed |v|    1.9820 m/s
+  ratio           1.003
+
+segment 20: 2026-08-23 00:41:17Z -> 01:02:11Z (21 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   10.4
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 1.1959 m/s @ 4 deg, flank 0.0684, back 0.0352 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 1.1959 m/s @ 4 deg, flank 0.0684, back 0.0352 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        1254 s (0.35 h)
+  band            2940 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1674 progress   = 3.5 min
+  rms             0.2123
+  max |change|    0.4889 progress   = 10.2 min
+  signed mean     -0.1666 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1666   = -3.5 min   (2940 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9727
+  min jaccard     0.9404 at s = 0.45
+  disagreement    0.0273 mean, splitting into
+    size          0.0271   (different amounts burned by the same level)
+    placement     0.0001   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    91.9 m mean, 226.2 m max   (3.7 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    1478 m over 1254 s
+  implied         1.1789 m/s
+  observed |v|    1.1959 m/s
+  ratio           0.986
+
+segment 21: 2026-08-23 01:02:11Z -> 01:11:33Z (9 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   13.2
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.9481 m/s @ 3 deg, flank 0.0542, back 0.0279 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.9481 m/s @ 3 deg, flank 0.0542, back 0.0279 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        562 s (0.16 h)
+  band            1070 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.0978 progress   = 0.9 min
+  rms             0.1425
+  max |change|    0.4630 progress   = 4.3 min
+  signed mean     -0.0932 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0932   = -0.9 min   (1070 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9948
+  min jaccard     0.9884 at s = 0.45
+  disagreement    0.0052 mean, splitting into
+    size          0.0050   (different amounts burned by the same level)
+    placement     0.0002   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    30.1 m mean, 65.0 m max   (1.2 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    528 m over 562 s
+  implied         0.9402 m/s
+  observed |v|    0.9481 m/s
+  ratio           0.992
+
+segment 22: 2026-08-23 01:11:33Z -> 01:21:20Z (10 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   248.5
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.0632 m/s @ 61 deg, flank 0.0036, back 0.0019 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.0632 m/s @ 61 deg, flank 0.0036, back 0.0019 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        587 s (0.16 h)
+  band            1062 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1022 progress   = 1.0 min
+  rms             0.1399
+  max |change|    0.4542 progress   = 4.4 min
+  signed mean     -0.0997 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0543   = -0.5 min   (629 cells)
+    upwind        -0.1657   = -1.6 min   (433 cells)
+    separation    -0.1114   = -1.1 min
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9949
+  min jaccard     0.9885 at s = 0.40
+  disagreement    0.0051 mean, splitting into
+    size          0.0050   (different amounts burned by the same level)
+    placement     0.0001   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    27.4 m mean, 55.3 m max   (1.1 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 587 s
+  implied         0.0000 m/s
+  observed |v|    0.0632 m/s
+  ratio           0.000
+
+segment 23: 2026-08-23 01:21:20Z -> 01:40:33Z (19 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   28.0
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.5215 m/s @ 353 deg, flank 0.0298, back 0.0154 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.5215 m/s @ 353 deg, flank 0.0298, back 0.0154 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        1153 s (0.32 h)
+  band            942 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.0727 progress   = 1.4 min
+  rms             0.1062
+  max |change|    0.4945 progress   = 9.5 min
+  signed mean     -0.0674 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0674   = -1.3 min   (942 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9969
+  min jaccard     0.9950 at s = 0.30
+  disagreement    0.0031 mean, splitting into
+    size          0.0029   (different amounts burned by the same level)
+    placement     0.0003   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    22.4 m mean, 37.2 m max   (0.9 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 1153 s
+  implied         0.0000 m/s
+  observed |v|    0.5215 m/s
+  ratio           0.000
+
+segment 24: 2026-08-23 01:40:33Z -> 02:04:09Z (24 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   11.1
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 1.4161 m/s @ 58 deg, flank 0.0810, back 0.0417 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 1.4161 m/s @ 58 deg, flank 0.0810, back 0.0417 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        1416 s (0.39 h)
+  band            3660 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1733 progress   = 4.1 min
+  rms             0.2044
+  max |change|    0.4680 progress   = 11.0 min
+  signed mean     -0.1710 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1710   = -4.0 min   (3660 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9739
+  min jaccard     0.9570 at s = 0.45
+  disagreement    0.0261 mean, splitting into
+    size          0.0257   (different amounts burned by the same level)
+    placement     0.0003   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    118.9 m mean, 243.9 m max   (4.8 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 1416 s
+  implied         0.0000 m/s
+  observed |v|    1.4161 m/s
+  ratio           0.000
+
+segment 25: 2026-08-23 02:04:09Z -> 02:56:27Z (52 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   53.6
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.0895 m/s @ 145 deg, flank 0.0051, back 0.0026 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.0895 m/s @ 145 deg, flank 0.0051, back 0.0026 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        3138 s (0.87 h)
+  band            2168 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1453 progress   = 7.6 min
+  rms             0.1994
+  max |change|    0.5629 progress   = 29.4 min
+  signed mean     -0.1425 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1425   = -7.5 min   (2168 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9883
+  min jaccard     0.9712 at s = 0.45
+  disagreement    0.0117 mean, splitting into
+    size          0.0115   (different amounts burned by the same level)
+    placement     0.0002   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    71.9 m mean, 136.4 m max   (2.9 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    939 m over 3138 s
+  implied         0.2994 m/s
+  observed |v|    0.0895 m/s
+  ratio           3.346
+
+segment 26: 2026-08-23 02:56:27Z -> 04:20:21Z (84 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   40.6
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.1180 m/s @ 72 deg, flank 0.0067, back 0.0035 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.1180 m/s @ 72 deg, flank 0.0067, back 0.0035 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        5034 s (1.40 h)
+  band            1379 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.0980 progress   = 8.2 min
+  rms             0.1288
+  max |change|    0.4110 progress   = 34.5 min
+  signed mean     -0.0952 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0952   = -8.0 min   (1379 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9953
+  min jaccard     0.9925 at s = 0.45
+  disagreement    0.0047 mean, splitting into
+    size          0.0046   (different amounts burned by the same level)
+    placement     0.0001   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    31.0 m mean, 46.8 m max   (1.2 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 5034 s
+  implied         0.0000 m/s
+  observed |v|    0.1180 m/s
+  ratio           0.000
+
+segment 27: 2026-08-23 04:20:21Z -> 05:06:37Z (46 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   236.4
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.0203 m/s @ 357 deg, flank 0.0012, back 0.0006 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.0203 m/s @ 357 deg, flank 0.0012, back 0.0006 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        2776 s (0.77 h)
+  band            257 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.0663 progress   = 3.1 min
+  rms             0.1099
+  max |change|    0.5531 progress   = 25.6 min
+  signed mean     -0.0091 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0091   = -0.4 min   (257 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9994
+  min jaccard     0.9992 at s = 0.20
+  disagreement    0.0006 mean, splitting into
+    size          0.0003   (different amounts burned by the same level)
+    placement     0.0002   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    13.8 m mean, 20.1 m max   (0.6 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 2776 s
+  implied         0.0000 m/s
+  observed |v|    0.0203 m/s
+  ratio           0.000
+
+segment 28: 2026-08-23 05:06:37Z -> 05:29:22Z (23 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   151.6
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.0316 m/s @ 206 deg, flank 0.0018, back 0.0009 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.0316 m/s @ 206 deg, flank 0.0018, back 0.0009 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        1365 s (0.38 h)
+  band            266 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1253 progress   = 2.9 min
+  rms             0.1576
+  max |change|    0.3745 progress   = 8.5 min
+  signed mean     +0.0628 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -   = - min   (0 cells)
+    upwind        +0.0628   = +1.4 min   (266 cells)
+    separation    -   = - min
+    note: all growth lies upwind of the initial perimeter's centroid, against the heading - check the ROS vector's direction
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9989
+  min jaccard     0.9984 at s = 0.60
+  disagreement    0.0011 mean, splitting into
+    size          0.0006   (different amounts burned by the same level)
+    placement     0.0006   (same amount, different cells)
+  dominant        placement   (redistribution, as predicted)
+  front offset    17.9 m mean, 22.4 m max   (0.7 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 1365 s
+  implied         0.0000 m/s
+  observed |v|    0.0316 m/s
+  ratio           0.000
+
+segment 29: 2026-08-23 05:29:22Z -> 07:30:35Z (121 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   104.0
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.0461 m/s @ 170 deg, flank 0.0026, back 0.0014 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.0461 m/s @ 170 deg, flank 0.0026, back 0.0014 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        7273 s (2.02 h)
+  band            2700 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1453 progress   = 17.6 min
+  rms             0.1967
+  max |change|    0.5833 progress   = 70.7 min
+  signed mean     -0.0818 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0818   = -9.9 min   (2700 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9872
+  min jaccard     0.9715 at s = 0.45
+  disagreement    0.0128 mean, splitting into
+    size          0.0075   (different amounts burned by the same level)
+    placement     0.0054   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    44.0 m mean, 88.1 m max   (1.8 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    223 m over 7273 s
+  implied         0.0307 m/s
+  observed |v|    0.0461 m/s
+  ratio           0.666
+
+segment 30: 2026-08-23 07:30:35Z -> 07:33:43Z (3 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   42.8
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.1122 m/s @ 270 deg, flank 0.0064, back 0.0033 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.1122 m/s @ 270 deg, flank 0.0064, back 0.0033 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        188 s (0.05 h)
+  band            3353 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1000 progress   = 0.3 min
+  rms             0.1509
+  max |change|    0.5673 progress   = 1.8 min
+  signed mean     -0.0826 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0739   = -0.2 min   (2791 cells)
+    upwind        -0.1258   = -0.4 min   (562 cells)
+    separation    -0.0518   = -0.2 min
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9900
+  min jaccard     0.9759 at s = 0.45
+  disagreement    0.0100 mean, splitting into
+    size          0.0083   (different amounts burned by the same level)
+    placement     0.0017   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    36.6 m mean, 84.3 m max   (1.5 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 188 s
+  implied         0.0000 m/s
+  observed |v|    0.1122 m/s
+  ratio           0.000
+
+segment 31: 2026-08-23 07:33:43Z -> 08:09:46Z (36 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   15.5
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.3092 m/s @ 236 deg, flank 0.0177, back 0.0091 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.3092 m/s @ 236 deg, flank 0.0177, back 0.0091 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        2163 s (0.60 h)
+  band            994 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1750 progress   = 6.3 min
+  rms             0.2068
+  max |change|    0.4391 progress   = 15.8 min
+  signed mean     +0.1428 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      +0.1946   = +7.0 min   (27 cells)
+    upwind        +0.1414   = +5.1 min   (967 cells)
+    separation    -0.0532   = -1.9 min
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9952
+  min jaccard     0.9869 at s = 0.70
+  disagreement    0.0048 mean, splitting into
+    size          0.0039   (different amounts burned by the same level)
+    placement     0.0009   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    44.0 m mean, 117.8 m max   (1.8 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 2163 s
+  implied         0.0000 m/s
+  observed |v|    0.3092 m/s
+  ratio           0.000
+
+segment 32: 2026-08-23 08:09:46Z -> 08:34:19Z (25 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   27.1
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.1767 m/s @ 324 deg, flank 0.0101, back 0.0052 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.1767 m/s @ 324 deg, flank 0.0101, back 0.0052 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        1473 s (0.41 h)
+  band            329 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1204 progress   = 3.0 min
+  rms             0.1762
+  max |change|    0.6602 progress   = 16.2 min
+  signed mean     -0.0812 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0812   = -2.0 min   (329 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9989
+  min jaccard     0.9973 at s = 0.45
+  disagreement    0.0011 mean, splitting into
+    size          0.0007   (different amounts burned by the same level)
+    placement     0.0003   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    18.5 m mean, 34.0 m max   (0.7 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    81 m over 1473 s
+  implied         0.0547 m/s
+  observed |v|    0.1767 m/s
+  ratio           0.310
+
+segment 33: 2026-08-23 08:34:19Z -> 09:45:16Z (71 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   46.9
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.1023 m/s @ 253 deg, flank 0.0058, back 0.0030 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.1023 m/s @ 253 deg, flank 0.0058, back 0.0030 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        4257 s (1.18 h)
+  band            921 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.0680 progress   = 4.8 min
+  rms             0.0881
+  max |change|    0.3833 progress   = 27.2 min
+  signed mean     +0.0049 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      +0.0049   = +0.3 min   (921 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9983
+  min jaccard     0.9978 at s = 0.70
+  disagreement    0.0017 mean, splitting into
+    size          0.0004   (different amounts burned by the same level)
+    placement     0.0013   (same amount, different cells)
+  dominant        placement   (redistribution, as predicted)
+  front offset    16.2 m mean, 19.2 m max   (0.6 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 4257 s
+  implied         0.0000 m/s
+  observed |v|    0.1023 m/s
+  ratio           0.000
+
+segment 34: 2026-08-23 09:45:16Z -> 12:45:55Z (181 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   128.4
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.0373 m/s @ 287 deg, flank 0.0021, back 0.0011 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.0373 m/s @ 287 deg, flank 0.0021, back 0.0011 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        10839 s (3.01 h)
+  band            487 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.0578 progress   = 10.4 min
+  rms             0.0911
+  max |change|    0.4271 progress   = 77.2 min
+  signed mean     -0.0218 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0218   = -3.9 min   (487 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9992
+  min jaccard     0.9989 at s = 0.80
+  disagreement    0.0008 mean, splitting into
+    size          0.0004   (different amounts burned by the same level)
+    placement     0.0004   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    14.9 m mean, 19.0 m max   (0.6 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 10839 s
+  implied         0.0000 m/s
+  observed |v|    0.0373 m/s
+  ratio           0.000
+
+segment 35: 2026-08-23 12:45:55Z -> 13:27:51Z (42 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   507.7
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.0094 m/s @ 315 deg, flank 0.0005, back 0.0003 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.0094 m/s @ 315 deg, flank 0.0005, back 0.0003 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        2516 s (0.70 h)
+  band            1136 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1072 progress   = 4.5 min
+  rms             0.1567
+  max |change|    0.6629 progress   = 27.8 min
+  signed mean     -0.0830 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0830   = -3.5 min   (1136 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9968
+  min jaccard     0.9922 at s = 0.45
+  disagreement    0.0032 mean, splitting into
+    size          0.0025   (different amounts burned by the same level)
+    placement     0.0007   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    26.1 m mean, 53.7 m max   (1.0 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 2516 s
+  implied         0.0000 m/s
+  observed |v|    0.0094 m/s
+  ratio           0.000
+
+segment 36: 2026-08-23 13:27:51Z -> 16:03:03Z (155 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   44.2
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.1085 m/s @ 284 deg, flank 0.0062, back 0.0032 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.1085 m/s @ 284 deg, flank 0.0062, back 0.0032 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        9312 s (2.59 h)
+  band            2119 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1118 progress   = 17.4 min
+  rms             0.1550
+  max |change|    0.5356 progress   = 83.1 min
+  signed mean     -0.1058 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1058   = -16.4 min   (2119 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9940
+  min jaccard     0.9860 at s = 0.45
+  disagreement    0.0060 mean, splitting into
+    size          0.0057   (different amounts burned by the same level)
+    placement     0.0003   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    39.9 m mean, 77.9 m max   (1.6 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    487 m over 9312 s
+  implied         0.0523 m/s
+  observed |v|    0.1085 m/s
+  ratio           0.482
+
+segment 37: 2026-08-23 16:03:03Z -> 17:40:22Z (97 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   107.0
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.0448 m/s @ 265 deg, flank 0.0026, back 0.0013 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.0448 m/s @ 265 deg, flank 0.0026, back 0.0013 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        5839 s (1.62 h)
+  band            486 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1137 progress   = 11.1 min
+  rms             0.1666
+  max |change|    0.4548 progress   = 44.3 min
+  signed mean     -0.0911 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0911   = -8.9 min   (486 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9987
+  min jaccard     0.9963 at s = 0.45
+  disagreement    0.0013 mean, splitting into
+    size          0.0011   (different amounts burned by the same level)
+    placement     0.0002   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    20.4 m mean, 41.7 m max   (0.8 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 5839 s
+  implied         0.0000 m/s
+  observed |v|    0.0448 m/s
+  ratio           0.000
+
+segment 38: 2026-08-23 17:40:22Z -> 18:40:57Z (61 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   46.4
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.1034 m/s @ 12 deg, flank 0.0059, back 0.0030 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.1034 m/s @ 12 deg, flank 0.0059, back 0.0030 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        3635 s (1.01 h)
+  band            322 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1553 progress   = 9.4 min
+  rms             0.1917
+  max |change|    0.5543 progress   = 33.6 min
+  signed mean     -0.0603 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0604   = -3.7 min   (321 cells)
+    upwind        -0.0452   = -2.7 min   (1 cells)
+    separation    +0.0151   = +0.9 min
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9988
+  min jaccard     0.9973 at s = 0.45
+  disagreement    0.0012 mean, splitting into
+    size          0.0005   (different amounts burned by the same level)
+    placement     0.0007   (same amount, different cells)
+  dominant        placement   (redistribution, as predicted)
+  front offset    21.3 m mean, 44.1 m max   (0.9 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 3635 s
+  implied         0.0000 m/s
+  observed |v|    0.1034 m/s
+  ratio           0.000
+
+segment 39: 2026-08-23 18:40:57Z -> 19:01:59Z (21 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   87.8
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.0546 m/s @ 268 deg, flank 0.0031, back 0.0016 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.0546 m/s @ 268 deg, flank 0.0031, back 0.0016 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        1262 s (0.35 h)
+  band            343 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1280 progress   = 2.7 min
+  rms             0.1758
+  max |change|    0.4543 progress   = 9.6 min
+  signed mean     -0.1048 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.1048   = -2.2 min   (343 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9990
+  min jaccard     0.9969 at s = 0.45
+  disagreement    0.0010 mean, splitting into
+    size          0.0009   (different amounts burned by the same level)
+    placement     0.0002   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    19.8 m mean, 41.1 m max   (0.8 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 1262 s
+  implied         0.0000 m/s
+  observed |v|    0.0546 m/s
+  ratio           0.000
+
+segment 40: 2026-08-23 19:01:59Z -> 23:32:29Z (270 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   557.1
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.0086 m/s @ 189 deg, flank 0.0005, back 0.0003 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.0086 m/s @ 189 deg, flank 0.0005, back 0.0003 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        16230 s (4.51 h)
+  band            107 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1257 progress   = 34.0 min
+  rms             0.1761
+  max |change|    0.5839 progress   = 157.9 min
+  signed mean     -0.0885 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0885   = -23.9 min   (107 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9997
+  min jaccard     0.9992 at s = 0.45
+  disagreement    0.0003 mean, splitting into
+    size          0.0002   (different amounts burned by the same level)
+    placement     0.0001   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    15.5 m mean, 27.8 m max   (0.6 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 16230 s
+  implied         0.0000 m/s
+  observed |v|    0.0086 m/s
+  ratio           0.000
+
+segment 41: 2026-08-23 23:32:29Z -> 00:13:21Z (41 min)
+  metric          elliptical: the final perimeter's ROS vector (the interval ending at it); LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   230.0
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.0208 m/s @ 241 deg, flank 0.0012, back 0.0006 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.0208 m/s @ 241 deg, flank 0.0012, back 0.0006 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        2452 s (0.68 h)
+  band            731 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.1025 progress   = 4.2 min
+  rms             0.1541
+  max |change|    0.5541 progress   = 22.6 min
+  signed mean     -0.0883 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      -0.0883   = -3.6 min   (731 cells)
+    upwind        -   = - min   (0 cells)
+    separation    -   = - min
+    note: all growth lies downwind of the initial perimeter's centroid; there is no upwind advance for the metric to delay
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9982
+  min jaccard     0.9952 at s = 0.45
+  disagreement    0.0018 mean, splitting into
+    size          0.0016   (different amounts burned by the same level)
+    placement     0.0002   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    21.1 m mean, 44.5 m max   (0.8 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 2452 s
+  implied         0.0000 m/s
+  observed |v|    0.0208 m/s
+  ratio           0.000
+
+segment 42: 2026-08-24 00:13:21Z -> 13:46:32Z (5133 min)
+  metric          elliptical: the initial perimeter's ROS vector - the final has none, so this is the previous interval's vector standing in; LB=3.00 as given
+  endpoints       jaccard 1.0000 / 1.0000
+  violations      0
+  shortest path   536.5
+
+Elliptical versus Euclidean, one perimeter pair
+==============================================================
+  grid            GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  metric          ellipse LB=3.00 HB=33.97, head 0.0208 m/s @ 241 deg, flank 0.0012, back 0.0006 m/s
+  provenance      as given: ellipse LB=3.00 HB=33.97, head 0.0208 m/s @ 241 deg, flank 0.0012, back 0.0006 m/s
+  control         Euclidean, 1 m/s (gauge backend)
+  interval        307991 s (85.55 h)
+  band            7558 cells being interpolated
+
+Endpoints and monotonicity (C2, C7) - both runs
+--------------------------------------------------------------
+  elliptical      jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+  euclidean       jaccard 1.0000 / 1.0000   violations 0   overshoot 0
+
+Timing: does the vector move the arrival times?
+--------------------------------------------------------------
+  mean |change|   0.2121 progress   = 1088.8 min
+  rms             0.2536
+  max |change|    0.6652 progress   = 3414.5 min
+  signed mean     +0.0325 progress   (a uniform offset carries no direction)
+
+  redistribution (negative downwind = burns earlier)
+    downwind      +0.4757   = +2441.8 min   (92 cells)
+    upwind        +0.0270   = +138.8 min   (7466 cells)
+    separation    -0.4487   = -2303.0 min
+
+Extent: does it move the fronts, or resize them?
+--------------------------------------------------------------
+  interior frames 19
+  mean jaccard    0.9667
+  min jaccard     0.9235 at s = 0.45
+  disagreement    0.0333 mean, splitting into
+    size          0.0213   (different amounts burned by the same level)
+    placement     0.0119   (same amount, different cells)
+  dominant        size   (a change of extent, not the predicted redistribution)
+  front offset    91.1 m mean, 177.7 m max   (3.6 cells mean)
+
+Head/back advance ratio (C6)
+--------------------------------------------------------------
+  ellipse HB      33.971   (free-space value, not a target on a pinned pair)
+  frames   elliptical   euclidean   quotient
+      20            -           -          -
+      10            -           -          -
+       5            -           -          -
+       2            -           -          -
+       1            -           -          -
+  a euclidean column far from 1 means the ratio is reading the
+  perimeters' own lopsidedness, not the metric
+
+Implied versus observed ROS
+--------------------------------------------------------------
+  head transit    0 m over 307991 s
+  implied         0.0000 m/s
+  observed |v|    0.0208 m/s
+  ratio           0.000
+
+combined field
+  grid                     GridSpec(352x357 cells of 25 m, 8.8x8.9 km, WGS 84 / UTM zone 11N)
+  simulation_start         2026-08-22T17:51:46+00:00
+  segments                 43
+  first_observation_s      3600.0
+  last_observation_s       417286.0
+  cells_igniting           53074
+  cells_burned_at_start    848
+  min_s                    3600.0
+  max_s                    414246.6138729857
+  speed_hint_mps           0.49694343906976735

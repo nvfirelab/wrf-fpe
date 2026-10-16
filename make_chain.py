@@ -1,0 +1,275 @@
+"""
+Module writing a chain.yaml from a folder of timestamped perimeter shapefiles.
+
+The perimeters are sorted by the time in their filenames, paired
+consecutively, and written as the `evolutions` list chain.py reads, with a
+grid, metric and outputs block filled in from the command line so the file
+is runnable as written and easy to edit afterwards.
+
+The time is read from the end of the filename, before the extension:
+
+    <anything>YYYYMMDD_HHMMSSZ.shp        e.g. mill_20240723_013731Z.shp
+
+The form kmz_to_shapefile.py writes, YYYYMMDDTHHMMSSZ, is accepted too, with
+or without its additive-mode _cumulative suffix. Files
+whose names carry no such stamp are skipped with a note (or refused with
+--strict), because a perimeter with no time cannot be placed in a chain.
+"""
+
+import glob
+import os
+import re
+from datetime import datetime, timedelta, timezone
+
+# The stamp ends the name, except for the _cumulative suffix additive-mode
+# files from kmz_to_shapefile carry.
+STAMP = re.compile(r"(\d{4})(\d{2})(\d{2})[T_](\d{2})(\d{2})(\d{2})Z(?:_cumulative)?$")
+
+
+def time_from_filename(path):
+    """
+    The UTC time stamped on the end of a filename, or None.
+
+    Parameters:
+    -----------
+    path : str
+        A file path; only the basename without extension is read
+
+    Returns:
+    --------
+    when : datetime or None
+        Timezone-aware UTC
+    """
+    stem = os.path.splitext(os.path.basename(path))[0]
+    match = STAMP.search(stem)
+    if not match:
+        return None
+    y, mo, d, h, mi, s = (int(g) for g in match.groups())
+    try:
+        return datetime(y, mo, d, h, mi, s, tzinfo=timezone.utc)
+    except ValueError:
+        return None
+
+
+def find_perimeters(folder, pattern="*.shp", strict=False):
+    """
+    Timestamped shapefiles in a folder, in time order.
+
+    Parameters:
+    -----------
+    folder : str
+        Directory to search
+    pattern : str
+        Glob within the folder
+    strict : bool
+        Raise on a file with no timestamp instead of skipping it
+
+    Returns:
+    --------
+    found : list of (datetime, path)
+        Ascending by time
+    skipped : list of str
+        Files that carried no readable timestamp
+    """
+    if not os.path.isdir(folder):
+        raise NotADirectoryError(folder)
+    paths = sorted(glob.glob(os.path.join(folder, pattern)))
+    # Companion vector shapefiles from kmz_to_shapefile are not perimeters.
+    paths = [p for p in paths if not p.endswith("_vectors.shp")]
+
+    found, skipped = [], []
+    for path in paths:
+        when = time_from_filename(path)
+        if when is None:
+            skipped.append(path)
+        else:
+            found.append((when, path))
+    if strict and skipped:
+        raise ValueError("no timestamp at the end of the filename: "
+                         + ", ".join(os.path.basename(p) for p in skipped))
+
+    found.sort(key=lambda item: item[0])
+    for (ta, pa), (tb, pb) in zip(found[:-1], found[1:]):
+        if ta == tb:
+            raise ValueError(
+                f"{os.path.basename(pa)} and {os.path.basename(pb)} carry the same "
+                "time; a chain needs one perimeter per instant")
+    return found, skipped
+
+
+def render_yaml(found, yaml_dir, cell_size=25.0, lb=None, wind_mps=None,
+                simulation_start=None, lead_hours=1.0, dt=2.0, prefix="chain",
+                validate=True, panels_per_segment=3, dpi=300, nesting_tolerance=0.01,
+                write_tign=False):
+    """
+    The text of a chain.yaml for a sorted list of perimeters.
+
+    Parameters:
+    -----------
+    found : list of (datetime, path)
+        From `find_perimeters`
+    yaml_dir : str
+        Directory the YAML will live in; paths are written relative to it
+    cell_size : float
+    lb, wind_mps : float, optional
+        The metric block. When both are omitted an `lb` line is written
+        commented out with a reminder, since the elliptical metric needs it.
+    simulation_start : datetime, optional
+        Defaults to `lead_hours` before the first perimeter
+    lead_hours : float
+    dt : float
+        Model time step for the SFIRE check
+    prefix : str
+        Output filenames are <prefix>_filmstrip.png and so on
+    validate : bool
+    panels_per_segment, dpi : int
+    nesting_tolerance : float
+    write_tign : bool
+        Also request the NetCDF and GeoTIFF arrays
+
+    Returns:
+    --------
+    text : str
+    """
+    if len(found) < 2:
+        raise ValueError(f"need at least two timestamped perimeters; found {len(found)}")
+    first = found[0][0]
+    if simulation_start is None:
+        simulation_start = first - timedelta(hours=float(lead_hours))
+    if simulation_start >= first:
+        raise ValueError("simulation_start must be before the first perimeter")
+
+    def rel(path):
+        return os.path.relpath(os.path.abspath(path), os.path.abspath(yaml_dir))
+
+    def stamp(when):
+        return when.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    lines = [
+        f"# Generated by make_chain.py from {len(found)} perimeters; edit freely.",
+        "grid:",
+        f"  cell_size: {cell_size:g}          # metres",
+        "  padding: 0.1",
+        "metric:",
+    ]
+    if lb is not None:
+        lines.append(f"  lb: {float(lb):g}                 # length-to-breadth ratio of the fire ellipse")
+    elif wind_mps is not None:
+        lines.append(f"  wind_mps: {float(wind_mps):g}          # midflame wind, gives LB via Finney Eq. 13")
+    else:
+        lines += ["  # lb: 3.0               # REQUIRED for the elliptical metric: set lb or wind_mps.",
+                  "  # wind_mps: 5.0         # Without either, every evolution falls back to Euclidean."]
+    lines += [
+        f"simulation_start: {stamp(simulation_start)}   # must precede the first perimeter by more than dt",
+        "",
+        "evolutions:",
+    ]
+    for (ta, pa), (tb, pb) in zip(found[:-1], found[1:]):
+        lines += [f"  - initial: {{path: {rel(pa)}, time: {stamp(ta)}}}",
+                  f"    final:   {{path: {rel(pb)}, time: {stamp(tb)}}}"]
+    # The animation is the default picture: with more than a handful of
+    # segments the filmstrip is a wall of postage stamps.
+    lines += [
+        "",
+        "outputs:",
+        f"  animation: {prefix}_animation.gif",
+        f"  # filmstrip: {prefix}_filmstrip.png      # one panel per instant; readable for a few segments",
+        f"  arrival_map: {prefix}_arrival.png",
+        f"  report: {prefix}_report.txt",
+    ]
+    if write_tign:
+        lines += [f"  netcdf: {prefix}_tign_g.nc",
+                  f"  geotiff: {prefix}_tign_g.tif"]
+    else:
+        lines += [f"  # netcdf: {prefix}_tign_g.nc",
+                  f"  # geotiff: {prefix}_tign_g.tif",
+                  "  # wrfinput: /path/to/wrfinput_d01"]
+    lines += [
+        f"  dt: {float(dt):g}                    # model time step, for the SFIRE acceptance check",
+        "",
+        "figure:",
+        "  frames_per_segment: 8    # animation frames between observations",
+        "  fps: 6",
+        "  hold_frames: 0           # extra frames on each observation (0: no pause at a join)",
+        "  arrival_scale: segments  # arrival map colour axis: segments|area|linear",
+        f"  panels_per_segment: {int(panels_per_segment)}    # filmstrip, if enabled",
+        "  max_columns: 4",
+        f"  dpi: {int(dpi)}",
+        "",
+        f"validate: {'true' if validate else 'false'}",
+        f"nesting_tolerance: {float(nesting_tolerance):g}",
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def main(argv=None):
+    """Write a chain.yaml for a folder of timestamped perimeter shapefiles."""
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Pair the timestamped perimeter shapefiles in a folder in time "
+                    "order and write the chain.yaml that chain.py runs. The time "
+                    "is read from the end of each filename: YYYYMMDD_HHMMSSZ.")
+    parser.add_argument("folder", help="directory of perimeter shapefiles")
+    parser.add_argument("-o", "--out", default=None,
+                        help="YAML to write (default: <folder>/chain.yaml)")
+    parser.add_argument("--pattern", default="*.shp", help="glob within the folder")
+    parser.add_argument("--cell-size", type=float, default=25.0)
+    parser.add_argument("--lb", type=float, default=None,
+                        help="length-to-breadth ratio for every evolution")
+    parser.add_argument("--wind-mps", type=float, default=None,
+                        help="midflame wind speed, as an alternative to --lb")
+    parser.add_argument("--simulation-start", default=None,
+                        help="ISO 8601 UTC; default is --lead-hours before the first perimeter")
+    parser.add_argument("--lead-hours", type=float, default=1.0)
+    parser.add_argument("--dt", type=float, default=2.0)
+    parser.add_argument("--prefix", default="chain", help="prefix for the output filenames")
+    parser.add_argument("--no-validate", action="store_true")
+    parser.add_argument("--tign", action="store_true",
+                        help="also request the NetCDF and GeoTIFF arrays")
+    parser.add_argument("--panels-per-segment", type=int, default=3)
+    parser.add_argument("--dpi", type=int, default=300)
+    parser.add_argument("--nesting-tolerance", type=float, default=0.01)
+    parser.add_argument("--strict", action="store_true",
+                        help="fail on a shapefile with no timestamp instead of skipping it")
+    parser.add_argument("--overwrite", action="store_true")
+    args = parser.parse_args(argv)
+
+    found, skipped = find_perimeters(args.folder, pattern=args.pattern, strict=args.strict)
+    for path in skipped:
+        print(f"  skipping {os.path.basename(path)}: no YYYYMMDD_HHMMSSZ at the end of the name")
+    if len(found) < 2:
+        parser.error(f"need at least two timestamped perimeters in {args.folder}; "
+                     f"found {len(found)}")
+
+    out = args.out or os.path.join(args.folder, "chain.yaml")
+    if os.path.exists(out) and not args.overwrite:
+        parser.error(f"{out} exists; pass --overwrite to replace it")
+
+    simulation_start = None
+    if args.simulation_start:
+        from tign import _aware
+        simulation_start = _aware(args.simulation_start)
+
+    text = render_yaml(found, os.path.dirname(os.path.abspath(out)),
+                       cell_size=args.cell_size, lb=args.lb, wind_mps=args.wind_mps,
+                       simulation_start=simulation_start, lead_hours=args.lead_hours,
+                       dt=args.dt, prefix=args.prefix, validate=not args.no_validate,
+                       panels_per_segment=args.panels_per_segment, dpi=args.dpi,
+                       nesting_tolerance=args.nesting_tolerance, write_tign=args.tign)
+    with open(out, "w") as handle:
+        handle.write(text)
+
+    for when, path in found:
+        print(f"  {when:%Y-%m-%d %H:%M:%SZ}  {os.path.basename(path)}")
+    print(f"  {len(found) - 1} evolution(s) -> {out}")
+    if args.lb is None and args.wind_mps is None:
+        print("  note: no --lb or --wind-mps given; set one in the YAML or every "
+              "evolution will run Euclidean")
+    print(f"  run it with:  python chain.py {out}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

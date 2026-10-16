@@ -1,0 +1,22 @@
+grid:
+  cell_size: 25
+metric:
+  lb: 3.0
+simulation_start: 2024-07-23T00:00:00Z
+evolutions:
+  - initial: {path: perimeter_20240723T010000Z.shp, time: 2024-07-23T01:00:00Z}
+    final:   {path: perimeter_20240723T013200Z.shp, time: 2024-07-23T01:32:00Z}
+  - initial: {path: perimeter_20240723T013200Z.shp, time: 2024-07-23T01:32:00Z}
+    final:   {path: perimeter_20240723T015600Z.shp, time: 2024-07-23T01:56:00Z}
+  - initial: {path: perimeter_20240723T015600Z.shp, time: 2024-07-23T01:56:00Z}
+    final:   {path: perimeter_20240723T022000Z.shp, time: 2024-07-23T02:20:00Z}
+outputs:
+  filmstrip: chain_filmstrip.png
+  arrival_map: chain_arrival.png
+  report: chain_report.txt
+  netcdf: tign_g.nc
+  dt: 2.0
+figure:
+  panels_per_segment: 2
+  dpi: 110
+validate: true
