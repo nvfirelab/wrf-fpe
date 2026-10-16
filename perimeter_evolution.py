@@ -151,12 +151,17 @@ class PerimeterEvolution:
             self.ax.set_xlim(self._xlim[0], self._xlim[1])
             self.ax.set_ylim(self._ylim[0], self._ylim[1])
         self.ax.set_aspect('equal')
-        self.ax.set_title(f'Contour Evolution at t = {t:.2f}')
+        self.ax.set_xticklabels([])
+        self.ax.set_yticklabels([])
+        # self.ax.set_axis_off()
+        self.ax.set_title(f'Mill Fire - Normalized Contour Evolution\n Progress: {t*100:.1f}%')
+
+        
         
         # Plot the speed traces using pcolormesh with fixed color range
-        masked_speed = np.ma.masked_invalid(self.speed_map)
-        self.ax.pcolormesh(self.X, self.Y, masked_speed, cmap='jet', 
-                          vmin=self.vmin, vmax=self.vmax, shading='gouraud')
+        # masked_speed = np.ma.masked_invalid(self.speed_map)
+        # self.ax.pcolormesh(self.X, self.Y, masked_speed, cmap='jet', 
+        #                   vmin=self.vmin, vmax=self.vmax, shading='gouraud')
         
         # Plot the evolving contour
         self.ax.contour(self.X, self.Y, phi, levels=[0], colors='red')
@@ -164,6 +169,9 @@ class PerimeterEvolution:
         # Plot the target outer contour for reference
         self.ax.contour(self.X, self.Y, self.phi_outer, levels=[0], 
                        colors='green', linestyles='dashed')
+
+        self.ax.contour(self.X, self.Y, self.phi_inner, levels=[0], 
+                       colors='blue', linestyles='dashed')
         
         return self.ax,
     
@@ -188,15 +196,20 @@ class PerimeterEvolution:
         self.phi_prev = self.phi_inner.copy()
         
         # Set up the figure and axis
-        self.fig, self.ax = plt.subplots()
+        self.fig, self.ax = plt.subplots(figsize=(8, 8))
         self.ax.set_xlim(xlim[0], xlim[1])
         self.ax.set_ylim(ylim[0], ylim[1])
         self.ax.set_aspect('equal')
         self.ax.set_title('Contour Evolution via SDF Interpolation with Speed Traces')
+        self.ax.set_xticklabels([])
+        self.ax.set_yticklabels([])
+        # self.ax.set_axis_off()
+
+        
         
         # Add colorbar with fixed range
-        sm = plt.cm.ScalarMappable(cmap='jet', norm=plt.Normalize(vmin=self.vmin, vmax=self.vmax))
-        self.fig.colorbar(sm, ax=self.ax, label='Speed')
+        # sm = plt.cm.ScalarMappable(cmap='jet', norm=plt.Normalize(vmin=self.vmin, vmax=self.vmax))
+        # self.fig.colorbar(sm, ax=self.ax, label='Speed')
         
         # Create the animation
         self.ani = FuncAnimation(self.fig, self._update_frame, 
@@ -205,7 +218,7 @@ class PerimeterEvolution:
         # Display the animation
         plt.show()
     
-    def save_animation(self, filename='contour_evolution_with_speed_traces.gif', fps=10):
+    def save_animation(self, filename='contour_evolution_with_speed_traces.gif', fps=20):
         """
         Save the animation to a file.
         
@@ -227,3 +240,61 @@ class PerimeterEvolution:
         self.ani.save(filename, writer='pillow', fps=fps)
         print(f"Animation saved to {filename}")
 
+    def create_filmstrip(self, time_steps=[0.33, 0.66, 1.0], xlim=(-2, 2), ylim=(-2, 2), filename="normalized_filmstrip.png"):
+        """
+        Create and save a static multi-panel filmstrip of the contour evolution.
+        
+        Parameters:
+        -----------
+        time_steps : list of floats
+            Progress intervals to plot (between 0.0 and 1.0)
+        xlim : tuple
+            X-axis limits (min, max)
+        ylim : tuple
+            Y-axis limits (min, max)
+        filename : str
+            Output filename for the high-resolution image
+        """
+        # Create a subplot row dynamically based on the number of time steps requested
+        fig, axes = plt.subplots(1, len(time_steps), figsize=(6 * len(time_steps), 6))
+        
+        # Ensure axes is iterable just in case a user passes a single time step
+        if len(time_steps) == 1:
+            axes = [axes]
+            
+        for ax, s in zip(axes, time_steps):
+            # Ensure the time step 's' is bounded strictly between 0 and 1
+            s = np.clip(s, 0.0, 1.0)
+            
+            # Linear interpolation of SDFs for the current time step
+            phi = (1 - s) * self.phi_inner + s * self.phi_outer
+            
+            # Set axis limits and aspect ratio
+            ax.set_xlim(xlim[0], xlim[1])
+            ax.set_ylim(ylim[0], ylim[1])
+            ax.set_aspect('equal')
+            
+            # Plot the source inner contour (Start)
+            ax.contour(self.X, self.Y, self.phi_inner, levels=[0], 
+                       colors='blue', linestyles='dashed', linewidths=2)
+            
+            # Plot the target outer contour (End)
+            ax.contour(self.X, self.Y, self.phi_outer, levels=[0], 
+                       colors='green', linestyles='dashed', linewidths=2)
+            
+            # Plot the newly evolved contour at time s
+            ax.contour(self.X, self.Y, phi, levels=[0], colors='red', linewidths=3)
+            
+            # Formatting (removing ticks, setting titles)
+            ax.set_title(f"Progress: {s*100:.0f}%", fontsize=14, fontweight='bold')
+            ax.set_xticks([])
+            ax.set_yticks([])
+            
+        fig.suptitle("Mill Fire - Normalized Contour Evolution", fontsize=18, fontweight='bold')
+        plt.tight_layout()
+        
+        # Save high-resolution version for the poster
+        plt.savefig(filename, dpi=300, bbox_inches='tight')
+        print(f"High-resolution film-strip saved to '{filename}'.")
+        
+        plt.show()

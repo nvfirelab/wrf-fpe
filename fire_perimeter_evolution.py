@@ -20,9 +20,9 @@ from rothermel_ros_evolution import RothermelROSEvolution
 # Configuration parameters
 contour_type = 1  # 1 for random Fourier, 2 for tongues with spots
 # Optional: path to shapefile for outer contour, or None to use generate_contour
-shapefile_path_outer = None #'/Users/ryanpurciel/Documents/UNR/LahainaWRFSFire/SHAPE_FILES_LAHAINA/530.shp'  
+shapefile_path_outer = '/Users/ryanpurciel/Documents/UNR/FPE/wrf-fpe/shapes/1989_NA_2024-07-23 02_50_41.shp'
 # Optional: path to shapefile for inner contour, or None to use default circle
-shapefile_path_inner = None #'/Users/ryanpurciel/Documents/UNR/LahainaWRFSFire/SHAPE_FILES_LAHAINA/430.shp'
+shapefile_path_inner = '/Users/ryanpurciel/Documents/UNR/FPE/wrf-fpe/shapes/1987_NA_2024-07-23 01_37_31.shp'
 
 # Define the grid for computation
 # If shapefiles are provided, use their bounds in cartesian coordinates
@@ -83,7 +83,7 @@ T = 1.0  # Total time
 num_steps = 20  # Number of animation frames
 
 # Choose evolution behavior: 'v1' (varying front speeds), 'v2' (uniform front speed), or 'rothermel' (Rothermel ROS)
-evolution_mode = 'rothermel'
+evolution_mode = 'v1'
 
 # Create perimeter evolution instance
 if evolution_mode == 'v2':
@@ -94,13 +94,19 @@ else:
     evolution = PerimeterEvolution(phi_inner, phi_outer, X, Y, T=T, num_steps=num_steps)
 
 # Create and display the animation
-evolution.create_animation(interval=200, xlim=xlim, ylim=ylim)
+# evolution.create_animation(interval=200, xlim=xlim, ylim=ylim)
+evolution.create_filmstrip(
+    time_steps=[0.33, 0.66, 1.0], 
+    xlim=(bounds['minx'], bounds['maxx']), 
+    ylim=(bounds['miny'], bounds['maxy']),
+    filename="mill_fire_linear_filmstrip.png"
+)
 
 # Save the animation as a GIF
 if evolution_mode == 'v2':
-    outfile = 'contour_evolution_v2_330_to_430.gif'
+    outfile = 'contour_evolution_v2_mill.gif'
 elif evolution_mode == 'rothermel':
-    outfile = 'contour_evolution_rothermel_330_to_430.gif'
+    outfile = 'contour_evolution_rothermel_mill.gif'
 else:
-    outfile = 'contour_evolution_v1_330_to_430.gif'
+    outfile = 'contour_evolution_v1_mill.gif'
 evolution.save_animation(outfile, fps=10)
